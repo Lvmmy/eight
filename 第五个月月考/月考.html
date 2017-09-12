@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	<!--使用meta标签-->
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<!--引入css样式-->
+		<link rel="stylesheet" href="css/one.css" />
+	<!--引入swiper 样式-->
+		<link rel="stylesheet" href="css/swiper.min.css" />
+	<!--引入zepto-->	
+		<script src="js/zepto.js"></script>
+	<!--引入swiper js插件-->
+		<script src="js/swiper.min.js"></script>
+	<!--引入iscroll插件-->
+		<script src="js/iscroll.js"></script>
+		<title></title>
+	</head>
+	<body>
+		
+	<!--外部big DIV-->
+		<div id="big">
+			
+	
+	<!-- 头部 -->
+		<header>
+			<img src="素材/切片_06.jpg" alt="" />
+			<h2>优惠商城</h2>
+			<img src="素材/切片_03.jpg" alt="" />
+		</header>
+		
+	<!--iscroll 结构-->
+		<div id="isc">
+			<div>  <!-- 第一个子元素，高要高于父元素的高 -->
+				
+				<!-- box 盒子 内容DIV 、 最外层容器 、第一个swiper -->
+				<div id="box" class="swiper-container">
+			<ul class="swiper-wrapper">
+				<li class="swiper-slide">
+					
+				<!--banner 轮播 、第二个swiper-->
+					<div id="banner" class="swiper-container">
+						<ul class="swiper-wrapper">
+							<li class="swiper-slide">
+								<img src="素材/切片_10.jpg" alt="" />
+							</li>
+							<li class="swiper-slide">
+								<img src="素材/切片_10.jpg" alt="" />
+							</li>
+							<li class="swiper-slide">
+								<img src="素材/切片_10.jpg" alt="" />
+							</li>
+							<li class="swiper-slide">
+								<img src="素材/切片_10.jpg" alt="" />
+							</li>
+						</ul>
+					</div>
+			
+			
+					<!--导航、分类、json传数据-->
+						<nav>
+							<ul>
+								<li>
+									<img src="素材/切片_13.jpg"/>
+									<span>草鸡大牌</span>
+								</li>
+								<li>
+									<img src="素材/切片_13.jpg"/>
+									<span>草鸡大牌</span>
+								</li>
+								<li>
+									<img src="素材/切片_13.jpg"/>
+									<span>草鸡大牌</span>
+								</li>
+								<li>
+									<img src="素材/切片_13.jpg"/>
+									<span>草鸡大牌</span>
+								</li>
+								<li>
+									<img src="素材/切片_13.jpg"/>
+									<span>草鸡大牌</span>
+								</li>
+							</ul>
+						</nav>
+						
+				<!--中间图片内容、json传数据-->
+						<main>
+							<ul>
+								<li>
+									<img src="素材/切片_28.jpg"/>
+								</li>
+								<li>
+									<img src="素材/切片_30.jpg"/>
+								</li>
+								<li>
+									<img src="素材/切片_28.jpg"/>
+								</li>
+								<li>
+									<img src="素材/切片_28.jpg"/>
+								</li>
+								<li>
+									<img src="素材/切片_28.jpg"/>
+								</li>
+							</ul>
+						</main>
+						
+				</li>    <!-- 第一页的内容 -->
+				<li class="swiper-slide">第二页内容</li>    <!-- 第二页的内容 -->
+				<li class="swiper-slide">第三页内容</li>    <!-- 第三页的内容 -->
+				<li class="swiper-slide">第四页内容</li>    <!-- 第四页的内容 -->
+				<li class="swiper-slide">第五页内容</li>    <!-- 第五页的内容 -->
+			</ul>
+		</div>  <!-- box  -->
+			</div>
+		</div>
+		
+		
+		
+	<!--底部内容、切换-->
+		<footer>
+			<ul>
+				<li class="bgcolor">
+					<img src="素材/切片_36.jpg"/>
+					<span>优惠</span>
+				</li>
+				<li>
+					<img src="素材/切片_38.jpg"/>
+					<span>热寻</span>
+				</li>
+				<li>
+					<img src="素材/切片_40.jpg"/>
+					<span>清仓</span>
+				</li>
+				<li>
+					<img src="素材/切片_43.jpg"/>
+					<span>购物车</span>
+				</li>
+				<li>
+					<img src="素材/切片_33.jpg"/>
+					<span>笑脸</span>
+				</li>
+			</ul>
+		</footer>
+	</div>	
+
+
+<script>
+ 		//初始化第一个swiper、 切换的swiper
+	var swiper = new Swiper('#box',{
+	})
+		//初始化第二个、banner轮播
+	var  swp = new Swiper('#banner',{
+		 //2s 间隔
+		autoplay:2000
+	})
+		//初始化iscroll、 根据效果如图可看出 超出一屏内容，就写了个iscroll
+	var is = new IScroll('#isc')
+	
+	
+		// 底部 li 切换效果
+	$('footer li').click(function(){
+		   //获取下标
+		var index = $(this).index();
+		console.log(index);
+			//当前下标的li 获得新属性； bgcolor 属性，威力大大提升
+		$('footer li').eq(index).addClass('bgcolor').siblings().removeClass('bgcolor');
+			//swiper 的slide下标 为当前点击li的下标。建立关系，一起滚动
+		swiper.slideTo(index)
+	})
+	
+	
+	
+	
+	//第一个ajax
+	$.ajax({
+			url:"http://127.0.0.1:7575/1",
+			success:function(data){
+				//转换数组
+				var obj = JSON.parse(data)
+				var str1 = "";
+				//遍历对象
+					for(var i of obj.info){
+						console.log(i)
+						//添加
+					str1 += 	'<li>'
+										+'<img src="素材/'+i.url+'" alt="" />'
+										
+										+'<span>'+i.span+'</span>'
+									+'</li>'
+					}
+					$('nav ul').html(str1)
+						
+				}
+			
+			})
+	
+		//第二个ajax
+			$.ajax({
+			url:"http://127.0.0.1:7575/2",
+			success:function(data){
+				//转换数组
+				var obj = JSON.parse(data)
+				var str1 = "";
+				//遍历对象
+					for(var i of obj.info){
+						console.log(i)
+						//添加
+					str1 += 	'<li>'
+										+'<img src="素材/'+i.url+'" alt="" />'
+									+'</li>'
+					}
+					$('main ul').html(str1)
+			}
+			
+			})
+</script>
+
+	</body>
+</html>
